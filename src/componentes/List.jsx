@@ -20,6 +20,8 @@ export const List = () => {
   const [descripcionTarea, setDescripcionTarea] = useState("");
   const [tareaEdit, setTareaEdit] = useState(null);
 
+  const token = JSON.parse(localStorage.getItem("token"));
+
   useEffect(() => {
     traerTareas();
   }, []);
@@ -32,11 +34,8 @@ export const List = () => {
   const traerTareas = async () => {
     try {
       const resp = await axios.get(
-        "https://testback4.onrender.com/api/tareas" +
-          "?limite=" +
-          limite +
-          "&desde=" +
-          0
+        `https://testback4.onrender.com/api/tareas?limite=${limite}&desde=${0}`,
+        { headers: { "x-token": token } }
       );
       const { total, tareas } = resp.data;
       setTotal(total);
@@ -55,7 +54,8 @@ export const List = () => {
     try {
       const resp = await axios.post(
         "https://testback4.onrender.com/api/tareas",
-        datos
+        datos,
+        { headers: { "x-token": token } }
       );
       resetForm();
       setTareas([...tareas, resp.data]);
@@ -183,79 +183,83 @@ export const List = () => {
           </div>
         </form>
       </div>
-      {tareas.map((tarea) => (
-        <div className="container row d-flex justify-content-start">
-          {tarea.completada === true ? (
-            <div
-              className="bg-success text-dark mb-3 row justify-content-between mx-0 px-0"
-              key={tarea._id}
-            >
-              <div className="col-8 px-1">
-                <h6>{tarea.nombre}</h6>
-                <p>{tarea.descripcion}</p>
-                <span>
-                  {format(new Date(tarea.fechaCreacion), "dd/MM/yyyy HH:mm:ss")}
-                </span>
-              </div>
-              <aside className="d-flex gap-1 col-4 my-auto justify-content-end px-1">
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => borrarTarea(tarea)}
-                >
-                  <FontAwesomeIcon icon={faTrashAlt} />
-                </button>
-                <button
-                  className="btn btn-warning btn-sm"
-                  onClick={() => guardarValores(tarea)}
-                >
-                  <FontAwesomeIcon icon={faPenToSquare} />
-                </button>
+      {tareas && tareas.length > 0 ? (
+        tareas.map((tarea) => (
+          <div className="container row d-flex justify-content-start">
+            {tarea.completada === true ? (
+              <div
+                className="bg-success text-dark mb-3 row justify-content-between mx-0 px-0"
+                key={tarea._id}
+              >
+                <div className="col-8 px-1">
+                  <h6>{tarea.nombre}</h6>
+                  <p>{tarea.descripcion}</p>
+                  <span>
+                    <span>{tarea.fechaCreacion}</span>
+                  </span>
+                </div>
+                <aside className="d-flex gap-1 col-4 my-auto justify-content-end px-1">
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => borrarTarea(tarea)}
+                  >
+                    <FontAwesomeIcon icon={faTrashAlt} />
+                  </button>
+                  <button
+                    className="btn btn-warning btn-sm"
+                    onClick={() => guardarValores(tarea)}
+                  >
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                  </button>
 
-                <button
-                  className="btn btn-primary btn-sm"
-                  onClick={() => tareaPendiente(tarea._id)}
-                >
-                  <FontAwesomeIcon icon={faSquareCheck} />
-                </button>
-              </aside>
-            </div>
-          ) : (
-            <div
-              className="bg-primary text-dark mb-3 row justify-content-between mx-0 px-0"
-              key={tarea._id}
-            >
-              <div className="col-8  px-1">
-                <h6>{tarea.nombre}</h6>
-                <p>{tarea.descripcion}</p>
-                <span>
-                  {format(new Date(tarea.fechaCreacion), "dd/MM/yyyy HH:mm:ss")}
-                </span>
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={() => tareaPendiente(tarea._id)}
+                  >
+                    <FontAwesomeIcon icon={faSquareCheck} />
+                  </button>
+                </aside>
               </div>
-              <aside className="d-flex gap-1 col-4 my-auto justify-content-end px-1">
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => borrarTarea(tarea)}
-                >
-                  <FontAwesomeIcon icon={faTrashAlt} />
-                </button>
-                <button
-                  className="btn btn-warning btn-sm"
-                  onClick={() => guardarValores(tarea)}
-                >
-                  <FontAwesomeIcon icon={faPenToSquare} />
-                </button>
+            ) : (
+              <div
+                className="bg-primary text-dark mb-3 row justify-content-between mx-0 px-0"
+                key={tarea._id}
+              >
+                <div className="col-8  px-1">
+                  <h6>{tarea.nombre}</h6>
+                  <p>{tarea.descripcion}</p>
+                  <span>
+                    <span>{tarea.fechaCreacion}</span>
+                  </span>
+                </div>
+                <aside className="d-flex gap-1 col-4 my-auto justify-content-end px-1">
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => borrarTarea(tarea)}
+                  >
+                    <FontAwesomeIcon icon={faTrashAlt} />
+                  </button>
+                  <button
+                    className="btn btn-warning btn-sm"
+                    onClick={() => guardarValores(tarea)}
+                  >
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                  </button>
 
-                <button
-                  className="btn btn-success btn-sm"
-                  onClick={() => tareaCompletada(tarea._id)}
-                >
-                  <FontAwesomeIcon icon={faSquareCheck} />
-                </button>
-              </aside>
-            </div>
-          )}
-        </div>
-      ))}
+                  <button
+                    className="btn btn-success btn-sm"
+                    onClick={() => tareaCompletada(tarea._id)}
+                  >
+                    <FontAwesomeIcon icon={faSquareCheck} />
+                  </button>
+                </aside>
+              </div>
+            )}
+          </div>
+        ))
+      ) : (
+        <p>cargando..</p>
+      )}
     </div>
   );
 };

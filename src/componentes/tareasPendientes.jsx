@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 
 export const TareasPendientes = () => {
   const [tareasPendientes, setTareasPendientes] = useState([]);
+  const token = JSON.parse(localStorage.getItem("token"));
 
   useEffect(() => {
     traerTareasPendientes();
@@ -14,7 +15,8 @@ export const TareasPendientes = () => {
   const traerTareasPendientes = async () => {
     try {
       const resp = await axios.get(
-        "https://testback4.onrender.com/api/tareas/pendientes"
+        "https://testback4.onrender.com/api/tareas/pendientes",
+        { headers: { "x-token": token } }
       );
       setTareasPendientes(resp.data);
     } catch (error) {
@@ -60,9 +62,7 @@ export const TareasPendientes = () => {
           <div className="col-8 px-1">
             <h6>{tarea.nombre}</h6>
             <p>{tarea.descripcion}</p>
-            <span>
-              {format(new Date(tarea.fechaCreacion), "dd/MM/yyyy HH:mm:ss")}
-            </span>
+            <span>{tarea.fechaCreacion}</span>
           </div>
           <aside className="d-flex gap-1 col-4 my-auto justify-content-end px-1">
             <button
