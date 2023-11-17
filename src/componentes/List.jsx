@@ -7,8 +7,10 @@ import {
   faSquareCheck,
   faXmark,
   faPlus,
+  faX,
 } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
+import "../styles/tareas.css";
 
 export const List = () => {
   const [tareas, setTareas] = useState([]);
@@ -185,12 +187,9 @@ export const List = () => {
       </div>
       {tareas && tareas.length > 0 ? (
         tareas.map((tarea) => (
-          <div className="container row d-flex justify-content-start">
+          <div className="container row d-flex justify-content-center px-3">
             {tarea.completada === true ? (
-              <div
-                className="bg-success text-dark mb-3 row justify-content-between mx-0 px-0"
-                key={tarea._id}
-              >
+              <div className="tarea-comp" key={tarea._id}>
                 <div className="col-8 px-1">
                   <h6>{tarea.nombre}</h6>
                   <p>{tarea.descripcion}</p>
@@ -198,33 +197,27 @@ export const List = () => {
                     <span>{tarea.fechaCreacion}</span>
                   </span>
                 </div>
-                <aside className="d-flex gap-1 col-4 my-auto justify-content-end px-1">
-                  <button
-                    className="btn btn-danger btn-sm"
+                <aside className="d-flex gap-3 col-4 my-auto justify-content-end px-1">
+                  <FontAwesomeIcon
+                    icon={faTrashAlt}
                     onClick={() => borrarTarea(tarea)}
-                  >
-                    <FontAwesomeIcon icon={faTrashAlt} />
-                  </button>
-                  <button
-                    className="btn btn-warning btn-sm"
+                    style={{ color: "#ea0606", fontSize: "17px" }}
+                  />
+                  <FontAwesomeIcon
+                    icon={faPenToSquare}
                     onClick={() => guardarValores(tarea)}
-                  >
-                    <FontAwesomeIcon icon={faPenToSquare} />
-                  </button>
+                    style={{ color: "#f5f901", fontSize: "17px" }}
+                  />
 
-                  <button
-                    className="btn btn-primary btn-sm"
+                  <FontAwesomeIcon
+                    icon={faX}
                     onClick={() => tareaPendiente(tarea._id)}
-                  >
-                    <FontAwesomeIcon icon={faSquareCheck} />
-                  </button>
+                    style={{ color: "blue", fontSize: "17px" }}
+                  />
                 </aside>
               </div>
             ) : (
-              <div
-                className="bg-primary text-dark mb-3 row justify-content-between mx-0 px-0"
-                key={tarea._id}
-              >
+              <div className="tarea-pend" key={tarea._id}>
                 <div className="col-8  px-1">
                   <h6>{tarea.nombre}</h6>
                   <p>{tarea.descripcion}</p>
@@ -232,26 +225,23 @@ export const List = () => {
                     <span>{tarea.fechaCreacion}</span>
                   </span>
                 </div>
-                <aside className="d-flex gap-1 col-4 my-auto justify-content-end px-1">
-                  <button
-                    className="btn btn-danger btn-sm"
+                <aside className="d-flex gap-3 col-4 my-auto justify-content-end px-1">
+                  <FontAwesomeIcon
+                    icon={faTrashAlt}
                     onClick={() => borrarTarea(tarea)}
-                  >
-                    <FontAwesomeIcon icon={faTrashAlt} />
-                  </button>
-                  <button
-                    className="btn btn-warning btn-sm"
+                    style={{ color: "#ea0606", fontSize: "17px" }}
+                  />
+                  <FontAwesomeIcon
+                    icon={faPenToSquare}
                     onClick={() => guardarValores(tarea)}
-                  >
-                    <FontAwesomeIcon icon={faPenToSquare} />
-                  </button>
+                    style={{ color: "#f5f901", fontSize: "17px" }}
+                  />
 
-                  <button
-                    className="btn btn-success btn-sm"
+                  <FontAwesomeIcon
+                    icon={faSquareCheck}
                     onClick={() => tareaCompletada(tarea._id)}
-                  >
-                    <FontAwesomeIcon icon={faSquareCheck} />
-                  </button>
+                    style={{ color: "green", fontSize: "17px" }}
+                  />
                 </aside>
               </div>
             )}

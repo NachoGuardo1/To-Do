@@ -1,0 +1,28 @@
+.tarea-pend {
+  width: 95%;
+  color: #f6f6f6;
+  background: linear-gradient(to bottom, #1f1f1f, #363636);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 1px;
+  padding-right: 1px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 5px;
+  border-radius: 9px;
+}
+.tarea-comp {
+  width: 95%;
+  color: #f6f6f6;
+  background: linear-gradient(to bottom, #648d23, #4d6c1f);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 1px;
+  padding-right: 1px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 5px;
+  border-radius: 9px;
+}

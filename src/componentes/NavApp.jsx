@@ -3,6 +3,9 @@ import Nav from "react-bootstrap/Nav";
 import { useNavigate } from "react-router-dom";
 import { authContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
+import "../styles/nav.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClipboardCheck } from "@fortawesome/free-solid-svg-icons";
 
 function NavApp() {
   const navigate = useNavigate();
@@ -33,33 +36,43 @@ function NavApp() {
     <>
       {usuario !== null ? (
         <>
-          <header className="container-fluid mx-0 py-2 px-0 row justify-content-end">
-            <div className="d-flex justify-content-center col-4">
-              <img
-                src="https://w7.pngwing.com/pngs/1013/469/png-transparent-computer-icons-check-mark-symbol-ok-miscellaneous-angle-logo-thumbnail.png"
-                alt=""
-                style={{
-                  width: "40px",
-                }}
+          <header className="head-nav">
+            <div>
+              <FontAwesomeIcon
+                icon={faClipboardCheck}
+                color="green"
+                className="custom-icon"
               />
             </div>
-            <div className=" d-flex justify-content-end col-4 px-1">
+            <div className="user-head">
               <button
-                className="btn border rounded-circle"
+                className="btn btn-danger border rounded-circle border-danger "
                 onClick={cerrarSesion}
               >
                 {usuario.nombre.slice(0, 2)}
               </button>
             </div>
           </header>
-          <Nav justify variant="tabs" defaultActiveKey="/home" className="mb-3">
+          <Nav
+            justify
+            variant="tabs"
+            defaultActiveKey="/home"
+            className="barra-nav"
+          >
             <Nav.Item>
-              <Nav.Link href="/home">Todas</Nav.Link>
+              <Nav.Link
+                eventKey="/home"
+                onClick={() => navigate("/home")}
+                className="custom-nav-link"
+              >
+                Todas
+              </Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
                 eventKey="link-1"
                 onClick={() => navigate("/completas")}
+                className="custom-nav-link"
               >
                 Completas
               </Nav.Link>
@@ -68,6 +81,7 @@ function NavApp() {
               <Nav.Link
                 eventKey="link-2"
                 onClick={() => navigate("/pendientes")}
+                className="custom-nav-link"
               >
                 Pendientes
               </Nav.Link>
