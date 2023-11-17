@@ -1,8 +1,12 @@
-import { faSquareCheck, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSquareCheck,
+  faTrashAlt,
+  faX,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
+import "../styles/tareas.css";
 
 export const TareasCompletadas = () => {
   const [tareasCompletadas, setTareasCompletadas] = useState([]);
@@ -54,33 +58,31 @@ export const TareasCompletadas = () => {
   };
 
   return (
-    <div>
-      {tareasCompletadas.map((tarea) => (
-        <div
-          className="bg-success text-dark mb-3 row justify-content-between mx-0 px-0"
-          key={tarea._id}
-        >
-          <div className="col-8 px-1">
-            <h6>{tarea.nombre}</h6>
-            <p>{tarea.descripcion}</p>
-            <span>{tarea.fechaCreacion}</span>
+    <div className="d-flex row justify-content-center">
+      <div className="d-flex row justify-content-center px-3">
+        {tareasCompletadas.map((tarea) => (
+          <div className="tarea-comp" key={tarea._id}>
+            <div className="col-8 px-1">
+              <h6>{tarea.nombre}</h6>
+              <p>{tarea.descripcion}</p>
+              <span>{tarea.fechaCreacion}</span>
+            </div>
+            <aside className="d-flex gap-3 col-4 my-auto justify-content-end px-1">
+              <FontAwesomeIcon
+                icon={faTrashAlt}
+                onClick={() => borrarTarea(tarea)}
+                style={{ color: "#ea0606", fontSize: "20px" }}
+              />
+
+              <FontAwesomeIcon
+                icon={faX}
+                onClick={() => tareaPendiente(tarea._id)}
+                style={{ color: "blue", fontSize: "20px" }}
+              />
+            </aside>
           </div>
-          <aside className="d-flex gap-1 col-4 my-auto justify-content-end px-1">
-            <button
-              className="btn btn-danger btn-sm"
-              onClick={() => borrarTarea(tarea)}
-            >
-              <FontAwesomeIcon icon={faTrashAlt} />
-            </button>
-            <button
-              className="btn btn-primary btn-sm"
-              onClick={() => tareaPendiente(tarea._id)}
-            >
-              <FontAwesomeIcon icon={faSquareCheck} />
-            </button>
-          </aside>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
