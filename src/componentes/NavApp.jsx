@@ -40,16 +40,22 @@ function NavApp() {
             <div>
               <FontAwesomeIcon
                 icon={faClipboardCheck}
-                color="green"
+                color="#29a60a"
                 className="custom-icon"
+                onClick={() => navigate("/home")}
               />
             </div>
             <div className="user-head">
               <button
-                className="btn btn-danger border rounded-circle border-danger "
+                className="btn rounded-circle "
+                style={{
+                  background: "#ea0606",
+                  color: "#f6f6f6",
+                }}
                 onClick={cerrarSesion}
               >
-                {usuario.nombre.slice(0, 2)}
+                {usuario.nombre.slice(0, 1)}
+                {usuario.apellido.slice(0, 1)}
               </button>
             </div>
           </header>

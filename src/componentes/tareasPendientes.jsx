@@ -6,6 +6,8 @@ import "../styles/tareas.css";
 
 export const TareasPendientes = () => {
   const [tareasPendientes, setTareasPendientes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const token = JSON.parse(localStorage.getItem("token"));
 
   useEffect(() => {
@@ -19,6 +21,7 @@ export const TareasPendientes = () => {
         { headers: { "x-token": token } }
       );
       setTareasPendientes(resp.data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -53,30 +56,45 @@ export const TareasPendientes = () => {
   };
 
   return (
-    <div className="d-flex row justify-content-center">
+    <div className="d-flex row justify-content-center mx-0">
       <div className="container row d-flex justify-content-center px-3">
-        {tareasPendientes.map((tarea) => (
-          <div className="tarea-pend" key={tarea._id}>
-            <div className="col-8 px-1">
-              <h6>{tarea.nombre}</h6>
-              <p>{tarea.descripcion}</p>
-              <span>{tarea.fechaCreacion}</span>
+        {loading ? (
+          <div className="text-center mt-3 ">
+            <div className="lds-roller">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
             </div>
-            <aside className="d-flex gap-3 col-4 my-auto justify-content-end px-1">
-              <FontAwesomeIcon
-                icon={faTrashAlt}
-                onClick={() => borrarTarea(tarea)}
-                style={{ color: "#ea0606", fontSize: "20px" }}
-              />
-
-              <FontAwesomeIcon
-                icon={faSquareCheck}
-                onClick={() => tareaCompletada(tarea._id)}
-                style={{ color: "green", fontSize: "20px" }}
-              />
-            </aside>
           </div>
-        ))}
+        ) : (
+          tareasPendientes.map((tarea) => (
+            <div className="tarea-pend" key={tarea._id}>
+              <div className="col-8 px-1">
+                <h6>{tarea.nombre}</h6>
+                <p>{tarea.descripcion}</p>
+                <span>{tarea.fechaCreacion}</span>
+              </div>
+              <aside className="d-flex gap-3 col-4 my-auto justify-content-end px-1">
+                <FontAwesomeIcon
+                  icon={faTrashAlt}
+                  onClick={() => borrarTarea(tarea)}
+                  style={{ color: "#ea0606", fontSize: "20px" }}
+                />
+
+                <FontAwesomeIcon
+                  icon={faSquareCheck}
+                  onClick={() => tareaCompletada(tarea._id)}
+                  style={{ color: "green", fontSize: "20px" }}
+                />
+              </aside>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

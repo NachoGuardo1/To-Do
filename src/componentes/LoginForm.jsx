@@ -1,4 +1,8 @@
-import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faClipboardCheck,
+  faLock,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useContext, useState } from "react";
@@ -42,10 +46,11 @@ export const LoginForm = () => {
         localStorage.setItem("token", JSON.stringify(token));
         logIN();
 
-        const { nombre, correo, rol, _id } = usuario;
+        const { nombre, apellido, correo, rol, _id } = usuario;
 
         guardarUsuario({
           nombre,
+          apellido,
           correo,
           rol,
           _id,
@@ -66,10 +71,16 @@ export const LoginForm = () => {
     <>
       <div>
         <form
-          className="col-11 mx-auto border rounded mt-5 p-1 bg-light miDiv"
+          className="col-10 col-sm-10 col-md-6  mx-auto border rounded mt-5 p-1  miDiv"
           onSubmit={handleLogin}
         >
-          <h4 className="text-center mt-3 mb-5">Login </h4>
+          <div className="text-center">
+            <FontAwesomeIcon
+              icon={faClipboardCheck}
+              color="#29a60a"
+              className="custom-icon mt-3 mb-4"
+            />
+          </div>
           <div className="text-center">
             <div className="my-3">
               <FontAwesomeIcon icon={faUser} className="me-2" />
@@ -100,7 +111,7 @@ export const LoginForm = () => {
               {error && <p style={{ color: "red" }}>{error}</p>}
             </div>
             {!loading ? (
-              <div className="mb-2 text-center">
+              <div className="my-3  text-center">
                 <button className="botonIngresar" type="submit">
                   Ingresar
                 </button>
