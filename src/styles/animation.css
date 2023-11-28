@@ -15,7 +15,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #111111;
+  background: #f6f6f6;
   margin: -4px 0 0 -4px;
 }
 .lds-roller div:nth-child(1) {
@@ -100,7 +100,7 @@
   border-radius: 15px;
   border-color: #29a60a;
   background: #29a60a;
-  color: white;
+  color: #f6f6f6;
 }
 
 .botonIngresar:hover {
@@ -113,7 +113,7 @@
   border-radius: 15px;
   border-color: rgb(2, 72, 201);
   background-color: rgb(2, 72, 201);
-  color: white;
+  color: #f6f6f6;
 }
 
 .botonRegistro:hover {
@@ -126,9 +126,20 @@
 }
 
 .miDiv {
+  color: #f6f6f6;
+  background: linear-gradient(to bottom, #1f1f1f, #363636);
   transition: opacity 1s ease-in-out;
 }
 
 .miDiv.oculto {
   opacity: 0;
+}
+
+.custom-icon {
+  font-size: 55px;
+}
+
+.custom-modal {
+  color: #1f1f1f;
+  background: #f6f6f6;
 }

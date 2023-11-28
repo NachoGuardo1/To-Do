@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 
 export const RegisterForm = () => {
   const [inputNombre, setNombre] = useState("");
+  const [inputApellido, setApellido] = useState("");
   const [inputCorreo, setCorreo] = useState("");
   const [inputPassword, setPassword] = useState("");
   const [inputPassword2, setPassword2] = useState("");
@@ -13,6 +14,7 @@ export const RegisterForm = () => {
 
   const v_rol = "USER";
   const nombreRegex = /^[a-zA-Z' ]{6,20}$/;
+  const apellidoRegex = /^[a-zA-Z' ]{6,20}$/;
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,10}$/;
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -25,6 +27,7 @@ export const RegisterForm = () => {
     e.preventDefault();
     const datos = {
       nombre: inputNombre,
+      apellido: inputApellido,
       correo: inputCorreo,
       password: inputPassword,
       rol: v_rol,
@@ -32,6 +35,10 @@ export const RegisterForm = () => {
 
     if (!nombreRegex.test(inputNombre)) {
       setError("El nombre debe contener entre 6 y 20 carateres");
+      return;
+    }
+    if (!apellidoRegex.test(inputApellido)) {
+      setError("El apellido debe contener entre 6 y 20 carateres");
       return;
     }
     if (!passwordRegex.test(inputPassword)) {
@@ -63,7 +70,7 @@ export const RegisterForm = () => {
   return (
     <div className="my-3">
       <form
-        className="col-11 mx-auto border rounded mt-5 p-1 bg-light miDiv"
+        className="col-10 col-sm-10 col-md-6 mx-auto border rounded mt-5 p-1  miDiv"
         onSubmit={handleRegister}
       >
         <h4 className="text-center mt-3 mb-5">Registro</h4>
@@ -75,7 +82,17 @@ export const RegisterForm = () => {
               value={inputNombre}
               onChange={(e) => setNombre(e.target.value)}
               maxLength={20}
-              placeholder="Nombre Completo"
+              placeholder="Nombre"
+            />
+          </div>
+          <div className="my-3">
+            <input
+              className="botonInput"
+              type="text"
+              value={inputApellido}
+              onChange={(e) => setApellido(e.target.value)}
+              maxLength={20}
+              placeholder="Apellido"
             />
           </div>
           <div className="my-3">
@@ -95,7 +112,7 @@ export const RegisterForm = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="*Contraseña"
             />
-            <div class="form-text w-75 mx-auto">
+            <div class="form-text text-light w-75 mx-auto">
               *8 a 10 caracteres, al menos una letra mayuscula, una minuscula y
               un número.
             </div>

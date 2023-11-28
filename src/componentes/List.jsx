@@ -5,12 +5,13 @@ import {
   faTrashAlt,
   faPenToSquare,
   faSquareCheck,
-  faXmark,
-  faPlus,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
 import "../styles/tareas.css";
+import { ModalForm } from "./ModalForm";
+import { FormEditTarea } from "./FormEditTarea";
+import { Modal } from "react-bootstrap";
 
 export const List = () => {
   const [tareas, setTareas] = useState([]);
@@ -18,20 +19,25 @@ export const List = () => {
   const [total, setTotal] = useState(0);
   const limite = total;
 
-  const [nombreTarea, setNombreTarea] = useState("");
-  const [descripcionTarea, setDescripcionTarea] = useState("");
   const [tareaEdit, setTareaEdit] = useState(null);
 
+  const [loading, setLoading] = useState(true);
+
   const token = JSON.parse(localStorage.getItem("token"));
+
+  const [showFormEdit, setShowFormEdit] = useState(false);
+
+  const handleShowFE = (tarea) => {
+    setTareaEdit(tarea);
+    setShowFormEdit(true);
+  };
+  const handleCloseFE = () => {
+    setShowFormEdit(false);
+  };
 
   useEffect(() => {
     traerTareas();
   }, []);
-
-  const resetForm = () => {
-    setNombreTarea("");
-    setDescripcionTarea("");
-  };
 
   const traerTareas = async () => {
     try {
@@ -42,25 +48,7 @@ export const List = () => {
       const { total, tareas } = resp.data;
       setTotal(total);
       setTareas(tareas);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const crearTarea = async (e) => {
-    e.preventDefault();
-    const datos = {
-      nombre: nombreTarea,
-      descripcion: descripcionTarea,
-    };
-    try {
-      const resp = await axios.post(
-        "https://testback4.onrender.com/api/tareas",
-        datos,
-        { headers: { "x-token": token } }
-      );
-      resetForm();
-      setTareas([...tareas, resp.data]);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -76,39 +64,6 @@ export const List = () => {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const guardarValores = (tarea) => {
-    setNombreTarea(tarea.nombre);
-    setDescripcionTarea(tarea.descripcion);
-    setTareaEdit(tarea);
-  };
-
-  const editarValores = async (e) => {
-    e.preventDefault();
-    const datos = {
-      nombre: nombreTarea,
-      descripcion: descripcionTarea,
-    };
-    try {
-      await axios.put(
-        "https://testback4.onrender.com/api/tareas/" + tareaEdit._id,
-        datos
-      );
-      resetForm();
-      const tareasActualizadas = tareas.map((tarea) =>
-        tarea._id === tareaEdit._id ? { ...tarea, ...datos } : tarea
-      );
-      setTareas(tareasActualizadas);
-      setTareaEdit(null);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const cancelarEdit = async () => {
-    setTareaEdit(null);
-    resetForm();
   };
 
   const tareaCompletada = async (tareaId) => {
@@ -140,52 +95,22 @@ export const List = () => {
   };
 
   return (
-    <div className="d-flex row justify-content-center">
-      <div className="container row d-flex justify-content-start ">
-        <form className="mt-2 mb-5">
-          <div className="col-12">
-            <input
-              type="text"
-              placeholder="Nombre de la tarea"
-              className="form-control mb-3"
-              value={nombreTarea}
-              onChange={(e) => setNombreTarea(e.target.value)}
-            />
+    <div className="d-flex row justify-content-center mx-0">
+      <div className="container row d-flex justify-content-start "></div>
+      {loading ? (
+        <div className="text-center mt-3 ">
+          <div className="lds-roller">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
           </div>
-          <div className="col-12">
-            <input
-              type="text"
-              placeholder="Descripcion de la tarea"
-              className="form-control mb-3"
-              value={descripcionTarea}
-              onChange={(e) => setDescripcionTarea(e.target.value)}
-            />
-          </div>
-          <div className="d-flex justify-content-end gap-2">
-            {tareaEdit === null ? (
-              <button className="btn btn-success btn-sm" onClick={crearTarea}>
-                <FontAwesomeIcon icon={faPlus} />
-              </button>
-            ) : (
-              <>
-                <button
-                  onClick={editarValores}
-                  className="btn btn-warning btn-sm"
-                >
-                  <FontAwesomeIcon icon={faPenToSquare} />
-                </button>
-                <button
-                  onClick={cancelarEdit}
-                  className="btn btn-danger btn-sm"
-                >
-                  <FontAwesomeIcon icon={faXmark} />
-                </button>
-              </>
-            )}
-          </div>
-        </form>
-      </div>
-      {tareas && tareas.length > 0 ? (
+        </div>
+      ) : tareas.length > 0 ? (
         tareas.map((tarea) => (
           <div className="container row d-flex justify-content-center px-3">
             {tarea.completada === true ? (
@@ -193,9 +118,6 @@ export const List = () => {
                 <div className="col-8 px-1">
                   <h6>{tarea.nombre}</h6>
                   <p>{tarea.descripcion}</p>
-                  <span>
-                    <span>{tarea.fechaCreacion}</span>
-                  </span>
                 </div>
                 <aside className="d-flex gap-3 col-4 my-auto justify-content-end px-1">
                   <FontAwesomeIcon
@@ -204,9 +126,10 @@ export const List = () => {
                     style={{ color: "#ea0606", fontSize: "17px" }}
                   />
                   <FontAwesomeIcon
+                    className="align-top"
                     icon={faPenToSquare}
-                    onClick={() => guardarValores(tarea)}
                     style={{ color: "#f5f901", fontSize: "17px" }}
+                    onClick={() => handleShowFE(tarea)}
                   />
 
                   <FontAwesomeIcon
@@ -221,9 +144,6 @@ export const List = () => {
                 <div className="col-8  px-1">
                   <h6>{tarea.nombre}</h6>
                   <p>{tarea.descripcion}</p>
-                  <span>
-                    <span>{tarea.fechaCreacion}</span>
-                  </span>
                 </div>
                 <aside className="d-flex gap-3 col-4 my-auto justify-content-end px-1">
                   <FontAwesomeIcon
@@ -231,10 +151,12 @@ export const List = () => {
                     onClick={() => borrarTarea(tarea)}
                     style={{ color: "#ea0606", fontSize: "17px" }}
                   />
+
                   <FontAwesomeIcon
+                    className="align-top"
                     icon={faPenToSquare}
-                    onClick={() => guardarValores(tarea)}
                     style={{ color: "#f5f901", fontSize: "17px" }}
+                    onClick={() => handleShowFE(tarea)}
                   />
 
                   <FontAwesomeIcon
@@ -247,9 +169,28 @@ export const List = () => {
             )}
           </div>
         ))
-      ) : (
-        <p>cargando..</p>
-      )}
+      ) : null}
+
+      <footer className="w-100 text-center fixed-bottom custom-foot">
+        {showFormEdit ? (
+          <Modal show={handleShowFE} onHide={handleCloseFE}>
+            <Modal.Header closeButton className="custom-modal">
+              <Modal.Title>Editar Tarea</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="custom-modal">
+              <FormEditTarea
+                tareas={tareas}
+                setTareas={setTareas}
+                setTareaEdit={setTareaEdit}
+                tareaEdit={tareaEdit}
+                handleCloseFE={handleCloseFE}
+              />
+            </Modal.Body>
+          </Modal>
+        ) : (
+          <ModalForm setTareas={setTareas} tareas={tareas} />
+        )}
+      </footer>
     </div>
   );
 };
