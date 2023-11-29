@@ -127,7 +127,7 @@
 
 .miDiv {
   color: #f6f6f6;
-  background: linear-gradient(to bottom, #1f1f1f, #363636);
+  margin-top: 4rem;
   transition: opacity 1s ease-in-out;
 }
 
