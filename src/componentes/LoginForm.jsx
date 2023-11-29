@@ -71,7 +71,7 @@ export const LoginForm = () => {
     <>
       <div>
         <form
-          className="col-10 col-sm-10 col-md-6  mx-auto border rounded mt-5 p-1  miDiv"
+          className="col-10 col-sm-10 col-md-6  mx-auto p-1 miDiv"
           onSubmit={handleLogin}
         >
           <div className="text-center">

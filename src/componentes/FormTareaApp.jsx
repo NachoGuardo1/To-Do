@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPenToSquare,
-  faPlus,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export const FormTareaApp = ({ setTareas, tareas }) => {
   const [nombreTarea, setNombreTarea] = useState("");
@@ -45,6 +41,7 @@ export const FormTareaApp = ({ setTareas, tareas }) => {
       );
       resetForm();
       setTareas([...tareas, resp.data]);
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }

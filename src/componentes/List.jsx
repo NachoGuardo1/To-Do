@@ -7,11 +7,11 @@ import {
   faSquareCheck,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
-import { format } from "date-fns";
 import "../styles/tareas.css";
 import { ModalForm } from "./ModalForm";
 import { FormEditTarea } from "./FormEditTarea";
 import { Modal } from "react-bootstrap";
+import { format } from "date-fns";
 
 export const List = () => {
   const [tareas, setTareas] = useState([]);
@@ -95,10 +95,13 @@ export const List = () => {
   };
 
   return (
-    <div className="d-flex row justify-content-center mx-0">
-      <div className="container row d-flex justify-content-start "></div>
+    <div
+      className="d-flex row justify-content-center mx-0"
+      style={{ marginBottom: "4.5rem" }}
+    >
+      <div className="container row d-flex justify-content-start"></div>
       {loading ? (
-        <div className="text-center mt-3 ">
+        <div className="text-center mt-3">
           <div className="lds-roller">
             <div></div>
             <div></div>
@@ -118,6 +121,9 @@ export const List = () => {
                 <div className="col-8 px-1">
                   <h6>{tarea.nombre}</h6>
                   <p>{tarea.descripcion}</p>
+                  <span>
+                    {format(new Date(tarea.fechaCreacion), "dd/MM/yyyy")}
+                  </span>
                 </div>
                 <aside className="d-flex gap-3 col-4 my-auto justify-content-end px-1">
                   <FontAwesomeIcon
@@ -144,6 +150,9 @@ export const List = () => {
                 <div className="col-8  px-1">
                   <h6>{tarea.nombre}</h6>
                   <p>{tarea.descripcion}</p>
+                  <span>
+                    {format(new Date(tarea.fechaCreacion), "dd/MM/yyyy")}
+                  </span>
                 </div>
                 <aside className="d-flex gap-3 col-4 my-auto justify-content-end px-1">
                   <FontAwesomeIcon

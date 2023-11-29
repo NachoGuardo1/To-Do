@@ -70,7 +70,7 @@ export const RegisterForm = () => {
   return (
     <div className="my-3">
       <form
-        className="col-10 col-sm-10 col-md-6 mx-auto border rounded mt-5 p-1  miDiv"
+        className="col-10 col-sm-10 col-md-6 mx-auto  p-1  miDiv"
         onSubmit={handleRegister}
       >
         <h4 className="text-center mt-3 mb-5">Registro</h4>
