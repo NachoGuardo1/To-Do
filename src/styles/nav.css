@@ -18,11 +18,17 @@
 .custom-nav-link {
   background-color: #050505;
   color: #f6f6f6;
+  text-decoration: none;
 }
-.custom-nav-link:hover {
-  border: 0.5px solid #f6f6f6;
-  color: #f6f6f6;
+
+.active {
+  text-decoration: none;
+  border-radius: 5px;
+  padding: 7px;
+  background-color: #f6f6f6;
+  color: #050505;
 }
+
 .custom-icon {
   font-size: 50px;
 }
