@@ -12,6 +12,7 @@ import { ModalForm } from "./ModalForm";
 import { FormEditTarea } from "./FormEditTarea";
 import { Modal } from "react-bootstrap";
 import { format } from "date-fns";
+import Swal from "sweetalert2";
 
 export const List = () => {
   const [tareas, setTareas] = useState([]);
@@ -94,6 +95,21 @@ export const List = () => {
     }
   };
 
+  const verificacionBorrado = (tarea) => {
+    Swal.fire({
+      title: "¿Estas seguro que quieres borrar esta tarea?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#29a60a",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, borrar tarea",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        borrarTarea(tarea);
+      }
+    });
+  };
   return (
     <div
       className="d-flex row justify-content-center mx-0"
@@ -119,16 +135,17 @@ export const List = () => {
             {tarea.completada === true ? (
               <div className="tarea-comp" key={tarea._id}>
                 <div className="col-8 px-1">
-                  <h6>{tarea.nombre}</h6>
-                  <p>{tarea.descripcion}</p>
-                  <span>
+                  <h5 className="mb-3">{tarea.nombre}:</h5>
+                  <p className="descripcion mb-3">{tarea.descripcion}</p>
+                  <p className="fecha-creacion mb-1">
+                    Fecha de creación:{" "}
                     {format(new Date(tarea.fechaCreacion), "dd/MM/yyyy")}
-                  </span>
+                  </p>
                 </div>
                 <aside className="d-flex gap-3 col-4 my-auto justify-content-end px-1">
                   <FontAwesomeIcon
                     icon={faTrashAlt}
-                    onClick={() => borrarTarea(tarea)}
+                    onClick={() => verificacionBorrado(tarea)}
                     style={{ color: "#ea0606", fontSize: "17px" }}
                   />
                   <FontAwesomeIcon
@@ -148,16 +165,17 @@ export const List = () => {
             ) : (
               <div className="tarea-pend" key={tarea._id}>
                 <div className="col-8  px-1">
-                  <h6>{tarea.nombre}</h6>
-                  <p>{tarea.descripcion}</p>
-                  <span>
+                  <h5 className="mb-3">{tarea.nombre}:</h5>
+                  <p className="descripcion mb-3">{tarea.descripcion}</p>
+                  <p className="fecha-creacion mb-1">
+                    Fecha de creación:{" "}
                     {format(new Date(tarea.fechaCreacion), "dd/MM/yyyy")}
-                  </span>
+                  </p>
                 </div>
                 <aside className="d-flex gap-3 col-4 my-auto justify-content-end px-1">
                   <FontAwesomeIcon
                     icon={faTrashAlt}
-                    onClick={() => borrarTarea(tarea)}
+                    onClick={() => verificacionBorrado(tarea)}
                     style={{ color: "#ea0606", fontSize: "17px" }}
                   />
 
