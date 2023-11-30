@@ -1,27 +1,24 @@
-import { useContext, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { authContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
 import "../styles/nav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboardCheck } from "@fortawesome/free-solid-svg-icons";
-import { Nav, NavDropdown } from "react-bootstrap";
 
 function NavApp() {
   const navigate = useNavigate();
   const usuario = JSON.parse(localStorage.getItem("usuario"));
   const { logOUT } = useContext(authContext);
 
-  const [dropDown, setDropDown] = useState("");
-
   const cerrarSesion = () => {
     Swal.fire({
       title: "Quieres cerrar sesion? ",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#29a60a",
       cancelButtonColor: "#d33",
-      cancelButtonText: "No",
+      cancelButtonText: "Cancelar",
       confirmButtonText: "Si, estoy seguro",
     }).then((result) => {
       if (result.isConfirmed) {
