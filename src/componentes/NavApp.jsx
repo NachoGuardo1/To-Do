@@ -1,16 +1,18 @@
-import { useContext } from "react";
-import Nav from "react-bootstrap/Nav";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { authContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
 import "../styles/nav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboardCheck } from "@fortawesome/free-solid-svg-icons";
+import { Nav, NavDropdown } from "react-bootstrap";
 
 function NavApp() {
   const navigate = useNavigate();
   const usuario = JSON.parse(localStorage.getItem("usuario"));
   const { logOUT } = useContext(authContext);
+
+  const [dropDown, setDropDown] = useState("");
 
   const cerrarSesion = () => {
     Swal.fire({
@@ -59,40 +61,29 @@ function NavApp() {
               </button>
             </div>
           </header>
-          <Nav
-            justify
-            variant="tabs"
-            defaultActiveKey="/home"
-            className="barra-nav"
-          >
-            <Nav.Item>
-              <Nav.Link
-                eventKey="/home"
-                onClick={() => navigate("/home")}
-                className="custom-nav-link"
-              >
-                Todas
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link
-                eventKey="link-1"
-                onClick={() => navigate("/completas")}
-                className="custom-nav-link"
-              >
-                Completas
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link
-                eventKey="link-2"
-                onClick={() => navigate("/pendientes")}
-                className="custom-nav-link"
-              >
-                Pendientes
-              </Nav.Link>
-            </Nav.Item>
-          </Nav>
+          <div className="w-100 mx-0 d-flex justify-content-around mb-4">
+            <NavLink
+              to="/home"
+              className="custom-nav-link"
+              activeClassName="active"
+            >
+              Mis Tareas
+            </NavLink>
+            <NavLink
+              to="/pendientes"
+              className="custom-nav-link"
+              activeClassName="active"
+            >
+              Tareas Pendientes
+            </NavLink>
+            <NavLink
+              to="/completas"
+              className="custom-nav-link"
+              activeClassName="active"
+            >
+              Tareas Completas
+            </NavLink>
+          </div>
         </>
       ) : null}
     </>
