@@ -122,3 +122,26 @@
   color: #1f1f1f;
   background: #f6f6f6;
 }
+
+.subtitulo {
+  font-size: 18px;
+}
+.descripcion {
+  font-size: 14px;
+}
+.fecha-creacion {
+  font-size: 10px;
+  font-style: italic;
+}
+
+@media (min-width: 600px) {
+  .subtitulo {
+    font-size: 24px;
+  }
+  .descripcion {
+    font-size: 20px;
+  }
+  .fecha-creacion {
+    font-size: 14px;
+  }
+}

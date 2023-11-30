@@ -94,7 +94,7 @@ export const TareasCompletadas = () => {
           tareasCompletadas.map((tarea) => (
             <div className="tarea-comp" key={tarea._id}>
               <div className="col-8 px-1">
-                <h5 className="mb-3">{tarea.nombre}:</h5>
+                <h2 className="mb-3 subtitulo">{tarea.nombre}:</h2>
                 <p className="descripcion mb-3">{tarea.descripcion}</p>
                 <p className="fecha-creacion mb-1">
                   Fecha de creación:{" "}
