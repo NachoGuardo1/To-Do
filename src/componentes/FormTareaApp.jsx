@@ -9,7 +9,7 @@ export const FormTareaApp = ({ setTareas, tareas }) => {
   const [error, setError] = useState("");
 
   const nombreRegex = /^[a-zA-Z0-9][a-zA-Z0-9' ]{4,18}$/;
-  const DescripcionRegex = /^[a-zA-Z0-9][a-zA-Z0-9' ]{4,99}$/;
+  const DescripcionRegex = /^[a-zA-Z0-9][a-zA-Z0-9' ]{4,149}$/;
 
   const token = JSON.parse(localStorage.getItem("token"));
 
@@ -25,7 +25,7 @@ export const FormTareaApp = ({ setTareas, tareas }) => {
       return;
     }
     if (!DescripcionRegex.test(descripcionTarea)) {
-      setError("La descripcion debe contener entre 5 y 100 letras y/o numeros");
+      setError("La descripcion debe contener entre 5 y 150 letras y/o numeros");
       return;
     }
     const datos = {

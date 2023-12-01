@@ -105,12 +105,14 @@ export const TareasPendientes = () => {
                   icon={faTrashAlt}
                   onClick={() => verificacionBorrado(tarea)}
                   style={{ color: "#ea0606", fontSize: "20px" }}
+                  className="btn btn-sm"
                 />
 
                 <FontAwesomeIcon
                   icon={faSquareCheck}
                   onClick={() => tareaCompletada(tarea._id)}
                   style={{ color: "green", fontSize: "20px" }}
+                  className="btn btn-sm"
                 />
               </aside>
             </div>
