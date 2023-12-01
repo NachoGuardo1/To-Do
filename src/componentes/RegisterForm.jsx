@@ -13,8 +13,8 @@ export const RegisterForm = () => {
   const [loading, setLoading] = useState(false);
 
   const v_rol = "USER";
-  const nombreRegex = /^[a-zA-Z' ]{6,20}$/;
-  const apellidoRegex = /^[a-zA-Z' ]{6,20}$/;
+  const nombreRegex = /^[a-zA-Z' ]{2,14}$/;
+  const apellidoRegex = /^[a-zA-Z' ]{2,14}$/;
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,10}$/;
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -34,11 +34,11 @@ export const RegisterForm = () => {
     };
 
     if (!nombreRegex.test(inputNombre)) {
-      setError("El nombre debe contener entre 6 y 20 carateres");
+      setError("El nombre debe contener entre 2 y 15 carateres");
       return;
     }
     if (!apellidoRegex.test(inputApellido)) {
-      setError("El apellido debe contener entre 6 y 20 carateres");
+      setError("El apellido debe contener entre 2 y 15 carateres");
       return;
     }
     if (!passwordRegex.test(inputPassword)) {

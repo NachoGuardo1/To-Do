@@ -142,14 +142,15 @@ export const List = () => {
                     {format(new Date(tarea.fechaCreacion), "dd/MM/yyyy")}
                   </p>
                 </div>
-                <aside className="d-flex gap-3 col-4 my-auto justify-content-end px-1">
+                <aside className="d-flex col-4 my-auto justify-content-end px-1">
                   <FontAwesomeIcon
                     icon={faTrashAlt}
                     onClick={() => verificacionBorrado(tarea)}
                     style={{ color: "#ea0606", fontSize: "17px" }}
+                    className="btn btn-sm"
                   />
                   <FontAwesomeIcon
-                    className="align-top"
+                    className="align-top btn btn-sm"
                     icon={faPenToSquare}
                     style={{ color: "#f5f901", fontSize: "17px" }}
                     onClick={() => handleShowFE(tarea)}
@@ -159,6 +160,7 @@ export const List = () => {
                     icon={faX}
                     onClick={() => tareaPendiente(tarea._id)}
                     style={{ color: "blue", fontSize: "17px" }}
+                    className="btn btn-sm"
                   />
                 </aside>
               </div>
@@ -172,15 +174,16 @@ export const List = () => {
                     {format(new Date(tarea.fechaCreacion), "dd/MM/yyyy")}
                   </p>
                 </div>
-                <aside className="d-flex gap-3 col-4 my-auto justify-content-end px-1">
+                <aside className="d-flex col-4 my-auto justify-content-end px-1">
                   <FontAwesomeIcon
                     icon={faTrashAlt}
                     onClick={() => verificacionBorrado(tarea)}
                     style={{ color: "#ea0606", fontSize: "17px" }}
+                    className="btn btn-sm"
                   />
 
                   <FontAwesomeIcon
-                    className="align-top"
+                    className="align-top btn btn-sm"
                     icon={faPenToSquare}
                     style={{ color: "#f5f901", fontSize: "17px" }}
                     onClick={() => handleShowFE(tarea)}
@@ -190,6 +193,7 @@ export const List = () => {
                     icon={faSquareCheck}
                     onClick={() => tareaCompletada(tarea._id)}
                     style={{ color: "green", fontSize: "17px" }}
+                    className="btn btn-sm"
                   />
                 </aside>
               </div>

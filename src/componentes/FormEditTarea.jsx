@@ -18,7 +18,7 @@ export const FormEditTarea = ({
   );
   const [error, setError] = useState("");
   const nombreRegex = /^[a-zA-Z0-9][a-zA-Z0-9' ]{4,18}$/;
-  const DescripcionRegex = /^[a-zA-Z0-9][a-zA-Z0-9' ]{4,99}$/;
+  const DescripcionRegex = /^[a-zA-Z0-9][a-zA-Z0-9' ]{4,149}$/;
 
   const editarValores = async (e) => {
     e.preventDefault();
@@ -32,7 +32,7 @@ export const FormEditTarea = ({
       return;
     }
     if (!DescripcionRegex.test(descripcionTarea)) {
-      setError("La descripcion debe contener entre 5 y 100 letras y/o numeros");
+      setError("La descripcion debe contener entre 5 y 150 letras y/o numeros");
       return;
     }
     setError("");
